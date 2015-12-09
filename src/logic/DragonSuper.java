@@ -1,5 +1,7 @@
 package logic;
 
+import java.awt.Graphics2D;
+
 public class DragonSuper extends Dragon{
 
 	private int x,y;
@@ -14,7 +16,7 @@ public class DragonSuper extends Dragon{
 	}
 	
 	@Override
-	public void draw() {
+	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
 		
 	}

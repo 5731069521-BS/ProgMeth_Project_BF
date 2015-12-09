@@ -1,15 +1,20 @@
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
-import render.GameScreen;
 import logic.GameLogic;
+import render.GameScreen;
+
 
 
 public class Main {
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		JFrame frame = new JFrame("Catch a fruit");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(600, 700));
 		
 		GameScreen gameScreen = new GameScreen();
 		GameLogic gameLogic = new GameLogic();

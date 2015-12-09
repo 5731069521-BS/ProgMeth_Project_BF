@@ -1,7 +1,10 @@
 package render;
 
+import java.awt.Graphics2D;
+
 public interface IRenderable {
-	public void draw();
+	public void draw(Graphics2D g);
 	public boolean isVisible();
 	public int getZ();
+	public void update();
 }

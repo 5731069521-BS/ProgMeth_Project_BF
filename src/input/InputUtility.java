@@ -3,7 +3,15 @@ package input;
 public class InputUtility {
 	private static int mouseX,mouseY;
 	private static boolean mouseLeftDown,mouseOnScreen;
+	private static boolean mouseLeftDownUp;
+	private static boolean mouseLeftDownTrigger;
 	
+	public static boolean isMouseLeftDownTrigger() {
+		return mouseLeftDownTrigger;
+	}
+	public static void setMouseLeftDownTrigger(boolean mouseLeftDownTrigger) {
+		InputUtility.mouseLeftDownTrigger = mouseLeftDownTrigger;
+	}
 	public static int getMouseX() {
 		return mouseX;
 	}
@@ -29,6 +37,12 @@ public class InputUtility {
 	}
 	public static void setMouseOnScreen(boolean mouseOnScreen) {
 		InputUtility.mouseOnScreen = mouseOnScreen;
+	}
+	public static boolean isMouseLeftDownUp() {
+		return mouseLeftDownUp;
+	}
+	public static void setMouseLeftDownUp(boolean mouseLeftDownUp) {
+		InputUtility.mouseLeftDownUp = mouseLeftDownUp;
 	}
 	
 }
