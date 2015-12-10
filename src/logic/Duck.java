@@ -10,8 +10,8 @@ import render.RenderableHolder;
 import utility.DrawingUtility;
 
 public class Duck implements IRenderable{
-	protected float hpMax = 50;
-	protected int price;
+	protected float hpMax = 500;
+	protected int price = 4;
 
 	protected int defaultX = 50, defaultY = 125+75/2;
 	protected int x,y,z;
@@ -21,7 +21,7 @@ public class Duck implements IRenderable{
 	protected boolean dead;
 	protected boolean bought;
 	protected AlphaComposite tran;
-	protected int i=0, aniCount = 0;;
+	protected int i=0, count = 0;;
 	public int column= -1;
 	
 	public Duck(int x, int y) {
@@ -103,16 +103,17 @@ public class Duck implements IRenderable{
 		
 		tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) hp/hpMax);
 		g.setComposite(tran);
-		if(bought){
-			if(aniCount == eggDelay/2){
-				if(i == 0) i = 1;
-				else i = 0;
-				aniCount = 0;
-			}
-			aniCount++;
-		}
+		
 		DrawingUtility.drawDuck(g, x, y, i);
 		g.drawString(Integer.toString(column), x, y);
+		g.drawString(Integer.toString(hp), x, y+10);
+		if(bought){
+			if(count==3){
+				i++;
+				count = 0;
+			}else count++;
+			if(i == 2) i = 0;
+		}
 		
 				
 	}
@@ -135,6 +136,7 @@ public class Duck implements IRenderable{
 			this.hp -= power;
 		}
 		else this.hp = 0;
+		
 	}
 
 	public int getX() {

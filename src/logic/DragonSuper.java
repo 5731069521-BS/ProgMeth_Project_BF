@@ -11,7 +11,9 @@ public class DragonSuper extends Dragon{
 	public DragonSuper(int x) {
 		// TODO Auto-generated constructor stub
 		super(x);
-		this.speed = 2;
+		this.hpMax = 100;
+		this.hp = (int) this.hpMax;
+		this.speed = 1;
 	}
 	
 	@Override
@@ -22,7 +24,8 @@ public class DragonSuper extends Dragon{
 		
 		DrawingUtility.drawSuperDragon(g, x, y, i);
 		g.drawString(Integer.toString(column), x, y);
-		if(count==7){
+		g.drawString(Integer.toString(hp), x, y+10);
+		if(count==0){
 			i++;
 			count = 0;
 		}else count++;

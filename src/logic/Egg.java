@@ -9,8 +9,8 @@ import render.IRenderable;
 import utility.DrawingUtility;
 
 public class Egg implements IRenderable{
-	protected int speed = 15;
-	protected int power = 5;
+	protected int speed = 10;
+	protected int power = 10;
 	
 	protected int x, y;
 	protected boolean destroyed;

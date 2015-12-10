@@ -9,7 +9,7 @@ public class EggSuper extends Egg {
 	public EggSuper(Duck shooter) {
 		// TODO Auto-generated constructor stub
 		super(shooter);
-		this.power = 15;
+		this.power = 25;
 	}
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub

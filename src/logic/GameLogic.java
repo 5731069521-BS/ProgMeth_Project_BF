@@ -34,6 +34,7 @@ public class GameLogic {
 		playerStatus = new PlayerStatus();
 		playingArea = new PlayingArea();
 		RenderableHolder.getInstance().add(playingArea);
+		RenderableHolder.getInstance().add(playerStatus);
 		createDuck();
 		createSuperDuck();
 		createShell();
@@ -66,7 +67,7 @@ public class GameLogic {
 		if(starfallDelay == starfallDelayCounter){
 			starfallDelayCounter = 0;
 			starfallDelay = RandomUtility.random(150, 200);
-			star = new Star(RandomUtility.random(0, GameScreen.WIDTH), 0);
+			star = new Star(RandomUtility.random(175, GameScreen.WIDTH), 0);
 			RenderableHolder.getInstance().add(star);
 		}else starfallDelayCounter++;
 		
@@ -105,9 +106,9 @@ public class GameLogic {
 						Duck duck = (Duck) RenderableHolder.getRenderableList().get(j);
 						
 						if(!duck.dead && duck.column == dragon.column){
-							if(duck.y<=dragon.y && duck.y+75>= dragon.y){
+							if(duck.y<=dragon.y && duck.y+50>= dragon.y){
 								dragon.attackDuck(duck);
-								break;
+								
 							}
 						}
 					}
@@ -115,8 +116,8 @@ public class GameLogic {
 						Shell shell = (Shell) RenderableHolder.getRenderableList().get(j);
 						
 						if(!shell.dead && shell.column == dragon.column){
-							if(shell.y<=dragon.y && shell.y+75>=dragon.y){
-								
+							if(shell.y<=dragon.y && shell.y+50>=dragon.y){
+								dragon.attackShell(shell);
 							}
 						}
 					}

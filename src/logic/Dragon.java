@@ -47,7 +47,9 @@ public class Dragon implements IRenderable{
 	}
 	 
 	public void update(){
-		this. y -= speed;
+		if(i%4 == 2){
+			this.y += speed; 			
+		}else this.y -= speed;
 		
 		if(hp == 0 || y<=0){
 			dead = true;
@@ -64,8 +66,9 @@ public class Dragon implements IRenderable{
 		DrawingUtility.drawDragon(g, x, y, i);
 		
 		g.drawString(Integer.toString(column), x, y);
+		g.drawString(Integer.toString(hp), x, y+10);
 		
-		if(count==7){
+		if(count==0){
 			i++;
 			count = 0;
 		}else count++;

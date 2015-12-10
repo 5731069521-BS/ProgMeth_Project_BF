@@ -9,23 +9,24 @@ import render.IRenderable;
 import utility.DrawingUtility;
 
 public class Shell implements IRenderable {
+	private float hpMax = 1500;
+	private int price = 2;
+
 	public int x,y,z;
 	private int defaultX = 50, defaultY = 275+75/2;
 	private int hp;
-	private int hpMax = 50;
-	private int price;
 	private boolean canBuy;
 	public boolean dead;
 	private boolean bought;
 	private AlphaComposite tran;
 	private int i , count;
-	public int column;
+	public int column = -1;
 	
 	public Shell(int x, int y) {
 		// TODO Auto-generated constructor stub
 		this.x = x;
 		this.y = y;
-		this.hp = hpMax;
+		this.hp = (int) hpMax;
 		this.dead = false;
 		
 	}
@@ -38,10 +39,12 @@ public class Shell implements IRenderable {
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
+		g.drawString(Integer.toString(column), x, y);
+		g.drawString(Integer.toString(hp), x, y+10);
 		tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (hp/hpMax));
 		g.setComposite(tran);
-		
-		DrawingUtility.drawShell(g, x, y, i);
+		if(!dead)
+			DrawingUtility.drawShell(g, x, y, i);
 		if(bought){
 			if(count==7){
 				i++;
@@ -89,6 +92,13 @@ public class Shell implements IRenderable {
 					this.canBuy = false;
 					this.z = 0;
 				}
+			}
+		}
+		if(bought){
+			if(hp == 0){
+				
+				GameLogic.playingArea.dead((y-125)/75, (x-175)/75);
+				dead = true;
 			}
 		}
 		

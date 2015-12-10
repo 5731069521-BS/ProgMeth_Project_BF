@@ -14,6 +14,8 @@ public class DuckSuper extends Duck{
 	public DuckSuper(int x, int y) {
 		// TODO Auto-generated constructor stub
 		super(x,y);
+		this.price = 8;
+		
 		this.defaultX = 50;
 		this.defaultY = 200+75/2;
 	}
@@ -64,16 +66,16 @@ public class DuckSuper extends Duck{
 		tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (hp/hpMax));
 		g.setComposite(tran);
 		
-		if(bought){
-			if(aniCount == eggDelay/2){
-				if(i == 0) i = 1;
-				else i = 0;
-				aniCount = 0;
-			}
-			aniCount++;
-		}
 		DrawingUtility.drawSuperDuck(g, x, y, i);
 		g.drawString(Integer.toString(column), x, y);
+		g.drawString(Integer.toString(hp), x, y+10);
+		if(bought){
+			if(count==3){
+				i++;
+				count = 0;
+			}else count++;
+			if(i == 2) i = 0;
+		}
 	}
 
 	@Override

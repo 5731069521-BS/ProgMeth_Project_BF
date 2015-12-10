@@ -10,13 +10,15 @@ import render.IRenderable;
 import utility.DrawingUtility;
 
 public class Star implements IRenderable{
-	private int x, y;
+	private int gone = 250;
+	
+	private int x, y, goneCount;
 	private int speedX, speedY;
 	private boolean dead;
 	private int i,count;
 	private boolean onFloor;
-	private int gone = 100 , goneCount;
-	
+	private boolean flashing, draw;
+	private int flashCounter, flashDurationCounter;
 	
 	public Star(int x, int y) {
 		// TODO Auto-generated constructor stub
@@ -26,6 +28,7 @@ public class Star implements IRenderable{
 		this.speedX = RandomUtility.random(-2, 2);
 		this.dead = false;
 		this.i = 0;
+		this.draw = true;
 	}
 
 	@Override
@@ -34,7 +37,9 @@ public class Star implements IRenderable{
 		
 		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
 		g.setComposite(tran);
+		if(draw)
 		DrawingUtility.drawStar(g, x, y, i);
+//		g.fillRect(x-5, y-5, 40, 40);
 //		if(count==0){
 			i++;
 //			count = 0;
@@ -78,18 +83,22 @@ public class Star implements IRenderable{
 				onFloor = true;
 			}			
 			
-			if(onFloor){
-				if(gone == goneCount){
-					this.dead = true;
-				}goneCount++;
-			}
 		}
+		if(onFloor){
+			if(gone == goneCount){
+				this.dead = true;
+				onFloor = false;
+				flashing = false;
+			}else goneCount++;
+		}
+		
 	}
+	
 	
 	public boolean isClick(int x, int y){
 		if(InputUtility.isMouseLeftDownTrigger()){
-			if(this.x-2<=x && this.x+32>=x){
-				if(this.y-2<=y && this.y+32>=y) {
+			if(this.x-5<=x && this.x+35>=x){
+				if(this.y-5<=y && this.y+35>=y) {
 					InputUtility.setMouseLeftDownTrigger(false);
 					return true;
 				}

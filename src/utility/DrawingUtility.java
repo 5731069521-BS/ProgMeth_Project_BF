@@ -10,7 +10,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class DrawingUtility {
-	protected static final Font standardFont = new Font("Tahoma", Font.BOLD, 30);
+	public static final Font standardFont = new Font("Comic Sans MS", Font.BOLD, 30);
+	public static final Font smallFont = new Font("Tahoma", Font.PLAIN, 10);
 	
 	protected static BufferedImage getImage(String directory){
 		ClassLoader loader = DrawingUtility.class.getClassLoader();
@@ -24,7 +25,7 @@ public class DrawingUtility {
 	public static BufferedImage duckPic = getImage("res/img/duck-all.png");
 	public static BufferedImage superDuckPic = getImage("res/img/superDuck-all.png");
 	public static BufferedImage star = getImage("res/img/star-all.png");
-	public static BufferedImage dragon = getImage("res/img/toothless-all.png");
+	public static BufferedImage dragon = getImage("res/img/toothless-all-new.png");
 	public static BufferedImage superDragon = getImage("res/img/toothlessSuper-all.png");
 	public static BufferedImage egg = getImage("res/img/egg.png");
 	public static BufferedImage superEgg = getImage("res/img/superEgg.png");
@@ -75,7 +76,8 @@ public class DrawingUtility {
 	
 	public static void drawDragon(Graphics2D g, int x, int y, int i){
 		/* fill code */
-		BufferedImage dragonUse = dragon.getSubimage(i*500, 0, 500, 700);
+		int xx = i*500;
+		BufferedImage dragonUse = dragon.getSubimage(xx, 0, 500, 700);
 		g.drawImage(dragonUse, resizeDragon, x-2, y);
 	}
 	
