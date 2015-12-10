@@ -15,7 +15,7 @@ public class DuckSuper extends Duck{
 		// TODO Auto-generated constructor stub
 		super(x,y);
 		this.defaultX = 50;
-		this.defaultY = 200;
+		this.defaultY = 200+75/2;
 	}
 	
 	public void update(){
@@ -30,7 +30,8 @@ public class DuckSuper extends Duck{
 				if(GameLogic.playingArea.canBePlaced(InputUtility.getMouseX(), InputUtility.getMouseY())){
 					this.x = GameLogic.playingArea.placedX(InputUtility.getMouseX());
 					this.y = GameLogic.playingArea.placedY(InputUtility.getMouseY());
-					GameLogic.playingArea.placed((y-125)/75, (x-175)/75);
+					this.column = (x-175)/75;
+					GameLogic.playingArea.placed((y-125)/75, column);
 					this.bought = true;
 					GameLogic.newSuperDuck = true;
 				}else{
@@ -47,6 +48,10 @@ public class DuckSuper extends Duck{
 				eggDelayCounter = 0;
 				RenderableHolder.getInstance().add(new EggSuper(this));
 			}else eggDelayCounter++;
+			if(hp == 0 ){
+				GameLogic.playingArea.dead((y-125)/75, (x-175)/75);
+				dead = true;
+			}
 		}
 		
 		
@@ -68,6 +73,7 @@ public class DuckSuper extends Duck{
 			aniCount++;
 		}
 		DrawingUtility.drawSuperDuck(g, x, y, i);
+		g.drawString(Integer.toString(column), x, y);
 	}
 
 	@Override

@@ -21,6 +21,7 @@ public class DragonSuper extends Dragon{
 		g.setComposite(tran);
 		
 		DrawingUtility.drawSuperDragon(g, x, y, i);
+		g.drawString(Integer.toString(column), x, y);
 		if(count==7){
 			i++;
 			count = 0;

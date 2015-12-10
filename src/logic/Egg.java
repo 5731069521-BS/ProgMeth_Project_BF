@@ -1,5 +1,6 @@
 package logic;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -8,18 +9,22 @@ import render.IRenderable;
 import utility.DrawingUtility;
 
 public class Egg implements IRenderable{
-	protected int power, x, y, speed;
+	protected int speed = 15;
+	protected int power = 5;
+	
+	protected int x, y;
 	protected boolean destroyed;
 	private Duck shooter;
+	public int column;
+	protected AlphaComposite tran;
 	
 	public Egg(Duck shooter) {
 		// TODO Auto-generated constructor stub
 		this.shooter = shooter;
 		this.x = shooter.getX()+75/2;
 		this.y = shooter.getY()+75/2;
-		this.speed = 3;
+		this.column = shooter.column;
 		this.destroyed = false;
-		this.power = 1;
 	}
 	
 	public void attackDragon(Dragon d){
@@ -38,6 +43,8 @@ public class Egg implements IRenderable{
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
+		tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
+		g.setComposite(tran);
 		if(!destroyed){
 			DrawingUtility.drawEgg(g, x, y+70/2);
 		}

@@ -9,15 +9,17 @@ import render.IRenderable;
 import utility.DrawingUtility;
 
 public class Shell implements IRenderable {
-	private int x,y,z;
-	private int defaultX = 50, defaultY = 275;
+	public int x,y,z;
+	private int defaultX = 50, defaultY = 275+75/2;
 	private int hp;
 	private int hpMax = 50;
 	private int price;
 	private boolean canBuy;
-	private boolean dead;
+	public boolean dead;
 	private boolean bought;
 	private AlphaComposite tran;
+	private int i , count;
+	public int column;
 	
 	public Shell(int x, int y) {
 		// TODO Auto-generated constructor stub
@@ -27,6 +29,11 @@ public class Shell implements IRenderable {
 		this.dead = false;
 		
 	}
+	
+	public void decreaseHP(int s){
+		if(hp > s) hp -= s;
+		else hp = 0;
+	}
 
 	@Override
 	public void draw(Graphics2D g) {
@@ -34,7 +41,14 @@ public class Shell implements IRenderable {
 		tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (hp/hpMax));
 		g.setComposite(tran);
 		
-		DrawingUtility.drawShell(g, x, y);
+		DrawingUtility.drawShell(g, x, y, i);
+		if(bought){
+			if(count==7){
+				i++;
+				count = 0;
+			}else count++;
+			if(i == 6) i = 0;
+		}
 		
 	}
 
@@ -64,7 +78,8 @@ public class Shell implements IRenderable {
 				if(GameLogic.playingArea.canBePlaced(InputUtility.getMouseX(), InputUtility.getMouseY())){
 					this.x = GameLogic.playingArea.placedX(InputUtility.getMouseX());
 					this.y = GameLogic.playingArea.placedY(InputUtility.getMouseY());
-					GameLogic.playingArea.placed((y-125)/75, (x-175)/75);
+					this.column = (x-175)/75;
+					GameLogic.playingArea.placed((y-125)/75, column);
 					this.bought = true;
 					GameLogic.newShell = true;
 
@@ -76,6 +91,7 @@ public class Shell implements IRenderable {
 				}
 			}
 		}
+		
 		
 		
 	}

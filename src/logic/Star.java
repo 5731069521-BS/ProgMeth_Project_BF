@@ -1,5 +1,6 @@
 package logic;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -13,7 +14,8 @@ public class Star implements IRenderable{
 	private int speedX, speedY;
 	private boolean dead;
 	private int i,count;
-	
+	private boolean onFloor;
+	private int gone = 100 , goneCount;
 	
 	
 	public Star(int x, int y) {
@@ -30,11 +32,13 @@ public class Star implements IRenderable{
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
 		
+		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		g.setComposite(tran);
 		DrawingUtility.drawStar(g, x, y, i);
-		if(count==7){
+//		if(count==0){
 			i++;
-			count = 0;
-		}else count++;
+//			count = 0;
+//		}else count++;
 		if(i == 7) i = 0;
 		
 	}
@@ -71,14 +75,21 @@ public class Star implements IRenderable{
 			}
 			if(y> GameScreen.HEIGHT-30){
 				y = GameScreen.HEIGHT - 30;
+				onFloor = true;
 			}			
+			
+			if(onFloor){
+				if(gone == goneCount){
+					this.dead = true;
+				}goneCount++;
+			}
 		}
 	}
 	
 	public boolean isClick(int x, int y){
 		if(InputUtility.isMouseLeftDownTrigger()){
-			if(this.x<=x && this.x+30>=x){
-				if(this.y<=y && this.y+30>=y) {
+			if(this.x-2<=x && this.x+32>=x){
+				if(this.y-2<=y && this.y+32>=y) {
 					InputUtility.setMouseLeftDownTrigger(false);
 					return true;
 				}

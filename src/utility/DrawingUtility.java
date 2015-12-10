@@ -21,26 +21,27 @@ public class DrawingUtility {
 		}
 	}
 
-	public static BufferedImage duckPic = getImage("res/duck-all.png");
-	public static BufferedImage superDuckPic = getImage("res/superDuck-all.png");
-	public static BufferedImage star = getImage("res/star-all.png");
-	public static BufferedImage dragon = getImage("res/toothless-all.png");
-	public static BufferedImage superDragon = getImage("res/toothlessSuper-all.png");
-	public static BufferedImage egg = getImage("res/egg.png");
-	public static BufferedImage superEgg = getImage("res/superEgg.png");
-	public static BufferedImage shell = getImage("res/shell.png");
+	public static BufferedImage duckPic = getImage("res/img/duck-all.png");
+	public static BufferedImage superDuckPic = getImage("res/img/superDuck-all.png");
+	public static BufferedImage star = getImage("res/img/star-all.png");
+	public static BufferedImage dragon = getImage("res/img/toothless-all.png");
+	public static BufferedImage superDragon = getImage("res/img/toothlessSuper-all.png");
+	public static BufferedImage egg = getImage("res/img/egg.png");
+	public static BufferedImage superEgg = getImage("res/img/superEgg.png");
+	public static BufferedImage shell = getImage("res/img/shell-all.png");
 	public static BufferedImage[] bg = new BufferedImage[7];
 	
 	public static void createBg(){
-		bg[0] = getImage("res/background-1.png");
-		bg[1] = getImage("res/background-2.png");
-		bg[2] = getImage("res/background-3.png");
-		bg[3] = getImage("res/background-4.png");
-		bg[4] = getImage("res/background-5.png");
-		bg[5] = getImage("res/background-6.png");
-		bg[6] = getImage("res/background-7.png");
+		bg[0] = getImage("res/img/background-1.png");
+		bg[1] = getImage("res/img/background-2.png");
+		bg[2] = getImage("res/img/background-3.png");
+		bg[3] = getImage("res/img/background-4.png");
+		bg[4] = getImage("res/img/background-5.png");
+		bg[5] = getImage("res/img/background-6.png");
+		bg[6] = getImage("res/img/background-7.png");
 		
 	}
+	
 	
 //	public static int duckCount = 0;
 	public static final AffineTransformOp resizeDuck = new AffineTransformOp(AffineTransform.getScaleInstance(0.75/2, 0.75/2), AffineTransformOp.TYPE_BICUBIC);
@@ -48,11 +49,16 @@ public class DrawingUtility {
 	public static final AffineTransformOp resizeStar = new AffineTransformOp(AffineTransform.getScaleInstance(0.3, 0.3), AffineTransformOp.TYPE_BICUBIC);
 	public static final AffineTransformOp resizeEgg = new AffineTransformOp(AffineTransform.getScaleInstance(0.25, 0.25), AffineTransformOp.TYPE_BICUBIC);
 	public static final AffineTransformOp resizeShell = new AffineTransformOp(AffineTransform.getScaleInstance(0.75/2, 0.75/2), AffineTransformOp.TYPE_BICUBIC);
+	public static final AffineTransformOp resizeBg = new AffineTransformOp(AffineTransform.getScaleInstance(1/1.2, 1/1.2), AffineTransformOp.TYPE_BICUBIC);
 	
 	protected static BufferedImage waveAnim;
 	
 	public static BufferedImage getWaveAnim(){
 		return waveAnim;
+	}
+	
+	public static void drawBg(Graphics2D g, int i){
+		g.drawImage(bg[i], resizeBg, 0, 0);
 	}
 	
 	public static void drawDuck(Graphics2D g, int x, int y, int duckCount){
@@ -69,13 +75,13 @@ public class DrawingUtility {
 	
 	public static void drawDragon(Graphics2D g, int x, int y, int i){
 		/* fill code */
-		BufferedImage dragonUse = dragon.getSubimage(i*500, 0, 500, 500);
-		g.drawImage(dragonUse, resizeDragon, x, y);
+		BufferedImage dragonUse = dragon.getSubimage(i*500, 0, 500, 700);
+		g.drawImage(dragonUse, resizeDragon, x-2, y);
 	}
 	
 	public static void drawSuperDragon(Graphics2D g, int x, int y, int i){
-		BufferedImage dragonUse = superDragon.getSubimage(i*500, 0, 500, 500);
-		g.drawImage(dragonUse, resizeDragon, x, y);
+		BufferedImage dragonUse = superDragon.getSubimage(i*500, 0, 500, 700);
+		g.drawImage(dragonUse, resizeDragon, x-2, y);
 		
 	}
 	
@@ -89,8 +95,9 @@ public class DrawingUtility {
 		g.drawImage(starUse, resizeStar, x, y);
 	}
 	
-	public static void drawShell(Graphics2D g, int x, int y){
-		g.drawImage(shell, resizeShell, x, y);
+	public static void drawShell(Graphics2D g, int x, int y, int i){
+		BufferedImage shellUse = shell.getSubimage(i*200, 0, 200, 200);
+		g.drawImage(shellUse, resizeShell, x, y);
 	}
 	
 	public static void drawSuperEgg(Graphics2D g, int x, int y){

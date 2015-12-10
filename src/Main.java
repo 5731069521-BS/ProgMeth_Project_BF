@@ -19,6 +19,7 @@ public class Main {
 		GameScreen gameScreen = new GameScreen();
 		GameLogic gameLogic = new GameLogic();
 		
+		frame.setResizable(false);
 		frame.getContentPane().add(gameScreen);
 		frame.setVisible(true);
 		frame.pack();
@@ -26,7 +27,7 @@ public class Main {
 		
 		while(true){
 			try {
-				Thread.sleep(20);
+				Thread.sleep(25);
 			} catch (InterruptedException e) {}
 			gameLogic.logicUpdate();
 			gameScreen.repaint();

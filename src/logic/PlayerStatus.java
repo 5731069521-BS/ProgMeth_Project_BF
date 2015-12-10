@@ -3,6 +3,7 @@ package logic;
 import java.awt.Graphics2D;
 
 import render.IRenderable;
+import utility.AudioUtility;
 
 public class PlayerStatus implements IRenderable{
 	private int time;
@@ -26,6 +27,7 @@ public class PlayerStatus implements IRenderable{
 
 	public void collectStar() {
 		this.money += 1;
+		AudioUtility.starSound.play();
 	}
 
 	public void buy(int price) {

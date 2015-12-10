@@ -10,17 +10,19 @@ import render.RenderableHolder;
 import utility.DrawingUtility;
 
 public class Duck implements IRenderable{
-	protected int defaultX = 50, defaultY = 125;
-	protected int x,y,z;
-	protected int hp;
 	protected float hpMax = 50;
 	protected int price;
+
+	protected int defaultX = 50, defaultY = 125+75/2;
+	protected int x,y,z;
+	protected int hp;
 	protected int eggDelay , eggDelayCounter;
 	protected boolean canBuy;
 	protected boolean dead;
 	protected boolean bought;
 	protected AlphaComposite tran;
 	protected int i=0, aniCount = 0;;
+	public int column= -1;
 	
 	public Duck(int x, int y) {
 		// TODO Auto-generated constructor stub
@@ -47,7 +49,8 @@ public class Duck implements IRenderable{
 					if(GameLogic.playingArea.canBePlaced(InputUtility.getMouseX(), InputUtility.getMouseY())){
 						this.x = GameLogic.playingArea.placedX(InputUtility.getMouseX());
 						this.y = GameLogic.playingArea.placedY(InputUtility.getMouseY());
-						GameLogic.playingArea.placed((y-125)/75, (x-175)/75);
+						this.column = (x-175)/75;
+						GameLogic.playingArea.placed((y-125)/75, column);
 						this.bought = true;
 						this.z = 0;
 						GameLogic.newDuck = true;
@@ -65,14 +68,14 @@ public class Duck implements IRenderable{
 				if(eggDelay == eggDelayCounter){
 					eggDelayCounter = 0;
 					RenderableHolder.getInstance().add(new Egg(this));
-				hp-=5;
+				
 				}else eggDelayCounter++;
+				if(hp == 0 ){
+					GameLogic.playingArea.dead((y-125)/75, (x-175)/75);
+					dead = true;
+				}
 			}
 			
-			if(hp == 0){
-				dead = true;
-				GameLogic.playingArea.dead((y-125)/75, (x-175)/75);
-			}
 		}
 		
 		
@@ -82,7 +85,7 @@ public class Duck implements IRenderable{
 	public void getDuck(){
 
 		if(InputUtility.isMouseLeftDownTrigger()){
-			GameLogic.newDuck = false;
+//			GameLogic.newDuck = false;
 			if(defaultX <= InputUtility.getMouseX() && defaultX+75 >= InputUtility.getMouseX()){
 			
 				if(defaultY <= InputUtility.getMouseY() && defaultY+75 >= InputUtility.getMouseY()){
@@ -109,6 +112,7 @@ public class Duck implements IRenderable{
 			aniCount++;
 		}
 		DrawingUtility.drawDuck(g, x, y, i);
+		g.drawString(Integer.toString(column), x, y);
 		
 				
 	}
