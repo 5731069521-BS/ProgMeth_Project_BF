@@ -4,6 +4,10 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import input.InputUtility;
+import render.RenderableHolder;
+import utility.DrawingUtility;
+
 public class DuckSuper extends Duck{
 	
 
@@ -14,18 +18,56 @@ public class DuckSuper extends Duck{
 		this.defaultY = 200;
 	}
 	
+	public void update(){
+		if(!canBuy) getDuck();
+		if(canBuy && !bought){
+			if(InputUtility.isMouseLeftDown()){
+				this.x = InputUtility.getMouseX()-75/2;
+				this.y = InputUtility.getMouseY()-75/2;
+				
+			}
+			if(!InputUtility.isMouseLeftDown() && InputUtility.isMouseLeftDownUp()){
+				if(GameLogic.playingArea.canBePlaced(InputUtility.getMouseX(), InputUtility.getMouseY())){
+					this.x = GameLogic.playingArea.placedX(InputUtility.getMouseX());
+					this.y = GameLogic.playingArea.placedY(InputUtility.getMouseY());
+					GameLogic.playingArea.placed((y-125)/75, (x-175)/75);
+					this.bought = true;
+					GameLogic.newSuperDuck = true;
+				}else{
+					this.x = defaultX;
+					this.y = defaultY;
+					this.canBuy = false;
+					this.z = 0;
+				}
+			}
+		}
+		
+		if(bought){
+			if(eggDelay == eggDelayCounter){
+				eggDelayCounter = 0;
+				RenderableHolder.getInstance().add(new EggSuper(this));
+			}else eggDelayCounter++;
+		}
+		
+		
+		
+	}
+	
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
 		tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (hp/hpMax));
 		g.setComposite(tran);
 		
-		g.setColor(Color.blue);
-//		g.fillRoundRect(x, y, 75, 75, 10, 10);
-		g.fillArc(x, y, 75, 75, 0, 360);
-		g.setColor(Color.white);
-//		g.fillRoundRect(x+4, y+4, (75-8), (75-8), 10, 10);
-		g.fillArc(x+4, y+4, 67, 67, 0, 360);
+		if(bought){
+			if(aniCount == eggDelay/2){
+				if(i == 0) i = 1;
+				else i = 0;
+				aniCount = 0;
+			}
+			aniCount++;
+		}
+		DrawingUtility.drawSuperDuck(g, x, y, i);
 	}
 
 	@Override
@@ -37,7 +79,7 @@ public class DuckSuper extends Duck{
 	@Override
 	public int getZ() {
 		// TODO Auto-generated method stub
-		return 0;
+		return z;
 	}	
 
 

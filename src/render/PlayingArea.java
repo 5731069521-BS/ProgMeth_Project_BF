@@ -17,12 +17,12 @@ public class PlayingArea implements IRenderable{
 	
 	public PlayingArea() {
 		// TODO Auto-generated constructor stub
-		bgImage = DrawingUtility.bg;
-		if(bgImage != null){
-			imageWidth = bgImage.getWidth();
-		}else{
-			imageWidth = 0;
-		}
+//		bgImage = DrawingUtility.bg;
+//		if(bgImage != null){
+//			imageWidth = bgImage.getWidth();
+//		}else{
+//			imageWidth = 0;
+//		}
 		table = new int[7][5];
 	}
 	
@@ -36,7 +36,15 @@ public class PlayingArea implements IRenderable{
 	public boolean canBePlaced(int x, int y){
 		if(x >= 175 && x <= GameScreen.WIDTH - 50){
 			if(y >= 125 && y <= GameScreen.HEIGHT - 50){
-				return true;
+				for(int i = 0; i<7; i++){
+					for(int j = 0; j<5; j++){
+						if(table[i][j]==0){
+							if(175 + j*boxWidth <= x && 175 + (j+1)*boxWidth >= x){
+								if(125 + i*boxWidth <= y && 125 + (i+1)*boxWidth >= y) return true;
+							}
+						}
+					}
+				}
 			}
 		}
 		return false;
@@ -70,10 +78,14 @@ public class PlayingArea implements IRenderable{
 		table[i][j] = 1;
 	}
 	
+	public void dead(int i, int j){
+		table[i][j] = 0;
+	}
+	
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
-		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.075f);
+		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
 		g.setComposite(tran);
 		g.setColor(Color.white);
 		for(int i = 0; i<7; i++){

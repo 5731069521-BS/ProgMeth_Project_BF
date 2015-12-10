@@ -5,6 +5,7 @@ public class InputUtility {
 	private static boolean mouseLeftDown,mouseOnScreen;
 	private static boolean mouseLeftDownUp;
 	private static boolean mouseLeftDownTrigger;
+	private static boolean mouseRightClick;
 	
 	public static boolean isMouseLeftDownTrigger() {
 		return mouseLeftDownTrigger;

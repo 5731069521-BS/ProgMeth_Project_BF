@@ -7,7 +7,7 @@ public class RandomUtility {
 	}
 	
 	public static int random(int start, int stop){
-		return (int) (start + (Math.random()*(stop-start)));
+		return (int) (start + (Math.random()*(stop-start+1)));
 	}
 
 }

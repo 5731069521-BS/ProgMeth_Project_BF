@@ -1,8 +1,10 @@
 package render;
 
 import input.InputUtility;
+import logic.RandomUtility;
 import utility.DrawingUtility;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -14,16 +16,19 @@ import javax.swing.JComponent;
 public class GameScreen extends JComponent {
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 700;
+	public int ranBg;
 	
 	public GameScreen() {
 		// TODO Auto-generated constructor stub
-
+		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		DrawingUtility.createBg();
+		ranBg = RandomUtility.random(0, 6);
 		addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getButton() == 1){
+
 					if(InputUtility.isMouseLeftDown()){
 						InputUtility.setMouseLeftDownUp(true);
 						if(InputUtility.isMouseOnScreen()){
@@ -36,7 +41,7 @@ public class GameScreen extends JComponent {
 					InputUtility.setMouseLeftDown(false);
 					InputUtility.setMouseLeftDownTrigger(false);
 					
-				}
+				
 			}
 			
 			@Override
@@ -46,11 +51,11 @@ public class GameScreen extends JComponent {
 				if(e.getButton() == 1){
 					if(!InputUtility.isMouseLeftDown()){
 						InputUtility.setMouseLeftDownTrigger(true);
-						System.out.println("					trigger True");
 					}else{
 						InputUtility.setMouseLeftDownTrigger(false);
 					}
 					InputUtility.setMouseLeftDown(true);
+					
 					if(InputUtility.isMouseOnScreen()){
 						InputUtility.setMouseX(e.getX());
 						InputUtility.setMouseY(e.getY());
@@ -93,12 +98,11 @@ public class GameScreen extends JComponent {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getButton() == 1){
 					if(InputUtility.isMouseOnScreen()){
 						InputUtility.setMouseX(e.getX());
 						InputUtility.setMouseY(e.getY());
 					}					
-				}
+
 			}
 		});
 		
@@ -109,12 +113,17 @@ public class GameScreen extends JComponent {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
-		g2.drawImage(DrawingUtility.bg, 0, 0, null);
+		g2.drawImage(DrawingUtility.bg[ranBg], 0, 0, null);
 		
+		RenderableHolder.sort();
 		synchronized (RenderableHolder.getInstance()) {
 			for(IRenderable renderable : RenderableHolder.getRenderableList()){
-				if(renderable.isVisible())
-				renderable.draw(g2);
+				if(renderable.isVisible()){
+					renderable.draw(g2);
+					System.out.println(renderable.getZ());
+					System.out.println(renderable);
+				}
+				else RenderableHolder.getRenderableList().remove(renderable);
 			}
 		}
 		

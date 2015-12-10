@@ -24,12 +24,12 @@ public class PlayerStatus implements IRenderable{
 		return isPause;
 	}
 
-	public int getMoney() {
-		return money;
+	public void collectStar() {
+		this.money += 1;
 	}
 
-	public void setMoney(int money) {
-		this.money = money;
+	public void buy(int price) {
+		this.money -= price;
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package render;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -19,7 +22,26 @@ public class RenderableHolder {
 	
 	public void add(IRenderable r){
 		entities.add(r);
+		Collections.sort(entities, new Comparator<IRenderable>() {
+			@Override
+			public int compare(IRenderable o1, IRenderable o2) {
+				// TODO Auto-generated method stub
+				if(o1.getZ() > o2.getZ()) return 1;
+				return 0;
+			}
+		});
 		
+	}
+	
+	public static void sort(){
+		Collections.sort(entities, new Comparator<IRenderable>() {
+			@Override
+			public int compare(IRenderable o1, IRenderable o2) {
+				// TODO Auto-generated method stub
+				if(o1.getZ() > o2.getZ()) return 1;
+				return 0;
+			}
+		});
 	}
 	
 	public static List<IRenderable> getRenderableList(){

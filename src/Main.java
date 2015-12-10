@@ -12,9 +12,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		JFrame frame = new JFrame("Catch a fruit");
+		JFrame frame = new JFrame("DDragon");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(600, 700));
+//		frame.setPreferredSize(new Dimension(600, 700));
 		
 		GameScreen gameScreen = new GameScreen();
 		GameLogic gameLogic = new GameLogic();
@@ -28,8 +28,8 @@ public class Main {
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {}
-			gameScreen.repaint();
 			gameLogic.logicUpdate();
+			gameScreen.repaint();
 		}
 	}
 
