@@ -10,40 +10,44 @@ import render.IRenderable;
 import utility.DrawingUtility;
 
 public class Star implements IRenderable{
-	private int gone = 250;
+	private float gone = 250;
 	
 	private int x, y, goneCount;
 	private int speedX, speedY;
 	private boolean dead;
 	private int i,count;
 	private boolean onFloor;
-	private boolean flashing, draw;
-	private int flashCounter, flashDurationCounter;
+
 	
 	public Star(int x, int y) {
 		// TODO Auto-generated constructor stub
 		this.x = x;
 		this.y = y;
-		this.speedY = RandomUtility.random(3, 7);
-		this.speedX = RandomUtility.random(-2, 2);
+		this.speedY = RandomUtility.random(1, 2);
+		this.speedX = RandomUtility.random(-1, 1);
 		this.dead = false;
 		this.i = 0;
-		this.draw = true;
+		this.goneCount = (int) gone;
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
 		
-		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) goneCount/gone);
 		g.setComposite(tran);
-		if(draw)
+		
+		if(!dead){
+			if(isClick(InputUtility.getMouseX(), InputUtility.getMouseY())){
+				GameLogic.playerStatus.collectStar();
+				dead = true;
+			}
+			
+		}
 		DrawingUtility.drawStar(g, x, y, i);
-//		g.fillRect(x-5, y-5, 40, 40);
-//		if(count==0){
+		
+		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
 			i++;
-//			count = 0;
-//		}else count++;
 		if(i == 7) i = 0;
 		
 	}
@@ -63,13 +67,17 @@ public class Star implements IRenderable{
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if(isClick(InputUtility.getMouseX(), InputUtility.getMouseY())){
-			dead = true;
-			GameLogic.playerStatus.collectStar();
-		}
+//		if(!dead){
+//			if(isClick(InputUtility.getMouseX(), InputUtility.getMouseY())){
+//				GameLogic.playerStatus.collectStar();
+//				dead = true;
+//			}
+//			
+//		}
 		if(!dead){
 			y += speedY;
 			x += speedX;
+			
 			if(x<0){
 				x = Math.abs(x);
 				speedX = -speedX;
@@ -85,25 +93,28 @@ public class Star implements IRenderable{
 			
 		}
 		if(onFloor){
-			if(gone == goneCount){
+			if(0 == goneCount){
 				this.dead = true;
 				onFloor = false;
-				flashing = false;
-			}else goneCount++;
+				
+			}else goneCount--;
 		}
 		
 	}
 	
 	
 	public boolean isClick(int x, int y){
-		if(InputUtility.isMouseLeftDownTrigger()){
-			if(this.x-5<=x && this.x+35>=x){
-				if(this.y-5<=y && this.y+35>=y) {
+		if(InputUtility.isMouseLeftDownTrigger() && !GameLogic.playerStatus.isPause() && !GameLogic.playerStatus.isEnd){
+			
+			if(this.x-30<=x && this.x+60>=x){
+				
+				if(this.y-30<=y && this.y+60>=y) {
 					InputUtility.setMouseLeftDownTrigger(false);
 					return true;
 				}
 			}			
 		}
+//		InputUtility.setMouseLeftDownTrigger(false);
 		return false;
 	}
 	

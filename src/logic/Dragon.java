@@ -24,7 +24,7 @@ public class Dragon implements IRenderable{
 		this.x = GameLogic.playingArea.placedX(x);
 		this.column = (x-175)/75 - 1;
 		if(column == -1) column = 0;
-		this.y = GameScreen.HEIGHT+75;
+		this.y = GameScreen.HEIGHT-50;
 		this.hp = (int) hpMax;
 		
 	}
@@ -47,13 +47,20 @@ public class Dragon implements IRenderable{
 	}
 	 
 	public void update(){
-		if(i%4 == 2){
+		if(i%4 == 0){
 			this.y += speed; 			
 		}else this.y -= speed;
 		
-		if(hp == 0 || y<=0){
+		if(hp == 0 ){
+			dead = true;
+			System.out.println("dragon deadddd");
+		}
+		if(y<= 120){
+//			GameLogic.playerStatus.isEnd = true;
+			GameLogic.playerStatus.isWin = false;
 			dead = true;
 		}
+
 	}
 
 	@Override
@@ -68,6 +75,7 @@ public class Dragon implements IRenderable{
 		g.drawString(Integer.toString(column), x, y);
 		g.drawString(Integer.toString(hp), x, y+10);
 		
+		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
 		if(count==0){
 			i++;
 			count = 0;

@@ -1,13 +1,18 @@
 package utility;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import render.GameScreen;
 
 public class DrawingUtility {
 	public static final Font standardFont = new Font("Comic Sans MS", Font.BOLD, 30);
@@ -22,11 +27,11 @@ public class DrawingUtility {
 		}
 	}
 
-	public static BufferedImage duckPic = getImage("res/img/duck-all.png");
-	public static BufferedImage superDuckPic = getImage("res/img/superDuck-all.png");
+	public static BufferedImage duckPic = getImage("res/img/duck-all-new1.png");
+	public static BufferedImage superDuckPic = getImage("res/img/superDuck-all-new1.png");
 	public static BufferedImage star = getImage("res/img/star-all.png");
 	public static BufferedImage dragon = getImage("res/img/toothless-all-new.png");
-	public static BufferedImage superDragon = getImage("res/img/toothlessSuper-all.png");
+	public static BufferedImage superDragon = getImage("res/img/toothlessSuper-all-new.png");
 	public static BufferedImage egg = getImage("res/img/egg.png");
 	public static BufferedImage superEgg = getImage("res/img/superEgg.png");
 	public static BufferedImage shell = getImage("res/img/shell-all.png");
@@ -104,6 +109,27 @@ public class DrawingUtility {
 	
 	public static void drawSuperEgg(Graphics2D g, int x, int y){
 		g.drawImage(superEgg, resizeEgg, x-25/2, y-5);
+	}
+	
+	public static void drawPauseScreen(Graphics2D g){
+		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+		g.setComposite(tran);
+		
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
+		
+	}
+	
+	public static void drawLoseScreen(Graphics2D g){
+		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f);
+		g.setComposite(tran);
+		
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
+		g.setColor(Color.white);
+		g.setFont(standardFont);
+		Rectangle2D rec = g.getFontMetrics().getStringBounds("YOU LOSE!", g);
+		g.drawString("YOU LOSE!", (int) (GameScreen.WIDTH/2 - rec.getWidth()/2),(int) (GameScreen.HEIGHT/2 - rec.getHeight()/2));
 	}
 	
 }

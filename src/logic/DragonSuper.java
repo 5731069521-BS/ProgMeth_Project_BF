@@ -25,6 +25,8 @@ public class DragonSuper extends Dragon{
 		DrawingUtility.drawSuperDragon(g, x, y, i);
 		g.drawString(Integer.toString(column), x, y);
 		g.drawString(Integer.toString(hp), x, y+10);
+		
+		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
 		if(count==0){
 			i++;
 			count = 0;

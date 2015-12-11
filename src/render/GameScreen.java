@@ -1,6 +1,7 @@
 package render;
 
 import input.InputUtility;
+import logic.GameLogic;
 import logic.RandomUtility;
 import utility.DrawingUtility;
 
@@ -28,19 +29,20 @@ public class GameScreen extends JComponent {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
-					if(InputUtility.isMouseLeftDown()){
-						InputUtility.setMouseLeftDownUp(true);
-						if(InputUtility.isMouseOnScreen()){
-							InputUtility.setMouseX(e.getX());
-							InputUtility.setMouseY(e.getY());
+					if(e.getButton() == 1){
+						if(InputUtility.isMouseLeftDown()){
+							InputUtility.setMouseLeftDownUp(true);
+							if(InputUtility.isMouseOnScreen()){
+								InputUtility.setMouseX(e.getX());
+								InputUtility.setMouseY(e.getY());
+							}
+						}else{
+							InputUtility.setMouseLeftDownUp(false);
 						}
-					}else{
-						InputUtility.setMouseLeftDownUp(false);
+						InputUtility.setMouseLeftDownTrigger(false);
+						InputUtility.setMouseLeftDown(false);
 					}
-					InputUtility.setMouseLeftDown(false);
-					InputUtility.setMouseLeftDownTrigger(false);
-					
+					else InputUtility.setMouseRightClickUp(true);
 				
 			}
 			
@@ -49,6 +51,16 @@ public class GameScreen extends JComponent {
 				// TODO Auto-generated method stub
 //				System.out.println("mouse press");
 				if(e.getButton() == 1){
+					if(InputUtility.isMouseRightClickUp()){
+						InputUtility.setMouseRightClickUp(false);
+						GameLogic.playerStatus.setPause(!GameLogic.playerStatus.isPause());
+						InputUtility.setMouseLeftDown(false);
+						InputUtility.setMouseLeftDownTrigger(false);
+						InputUtility.setMouseLeftDownUp(false);
+						
+						return;
+					}
+					
 					if(!InputUtility.isMouseLeftDown()){
 						InputUtility.setMouseLeftDownTrigger(true);
 					}else{
@@ -80,11 +92,16 @@ public class GameScreen extends JComponent {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getButton() == 1){
-					InputUtility.setMouseLeftDown(true);
-					InputUtility.setMouseLeftDownUp(false);
-					
-				}
+//				if(e.getButton() == 1){
+//					if(!InputUtility.isMouseLeftDown()){
+//						InputUtility.setMouseLeftDownTrigger(true);
+//					}else{
+//						InputUtility.setMouseLeftDownTrigger(false);
+//					}
+//					InputUtility.setMouseLeftDown(true);
+//					InputUtility.setMouseLeftDownUp(false);
+//					
+//				}
 			}
 		});
 		addMouseMotionListener(new MouseMotionListener() {
@@ -124,6 +141,13 @@ public class GameScreen extends JComponent {
 				else RenderableHolder.getRenderableList().remove(renderable);
 			}
 		}
+		if(GameLogic.playerStatus.isEnd){
+			if(GameLogic.playerStatus.isWin){
+				
+			}else DrawingUtility.drawLoseScreen(g2);
+		}else if(GameLogic.playerStatus.isPause() ){
+				DrawingUtility.drawPauseScreen(g2);
+			}
 		
 	}
 	

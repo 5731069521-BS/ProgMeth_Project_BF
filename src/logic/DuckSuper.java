@@ -35,7 +35,9 @@ public class DuckSuper extends Duck{
 					this.column = (x-175)/75;
 					GameLogic.playingArea.placed((y-125)/75, column);
 					this.bought = true;
+					GameLogic.playerStatus.setMoney(GameLogic.playerStatus.getMoney()-this.price);
 					GameLogic.newSuperDuck = true;
+					this.z = 0;
 				}else{
 					this.x = defaultX;
 					this.y = defaultY;
@@ -45,7 +47,7 @@ public class DuckSuper extends Duck{
 			}
 		}
 		
-		if(bought){
+		if(bought&&haveDragon){
 			if(eggDelay == eggDelayCounter){
 				eggDelayCounter = 0;
 				RenderableHolder.getInstance().add(new EggSuper(this));
@@ -69,12 +71,14 @@ public class DuckSuper extends Duck{
 		DrawingUtility.drawSuperDuck(g, x, y, i);
 		g.drawString(Integer.toString(column), x, y);
 		g.drawString(Integer.toString(hp), x, y+10);
+		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
 		if(bought){
-			if(count==3){
+			
+			if(count==2){
 				i++;
 				count = 0;
 			}else count++;
-			if(i == 2) i = 0;
+			if(i == 9) i = 1;
 		}
 	}
 

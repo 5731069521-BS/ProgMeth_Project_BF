@@ -20,6 +20,7 @@ public class Duck implements IRenderable{
 	protected boolean canBuy;
 	protected boolean dead;
 	protected boolean bought;
+	protected boolean haveDragon;
 	protected AlphaComposite tran;
 	protected int i=0, count = 0;;
 	public int column= -1;
@@ -32,6 +33,7 @@ public class Duck implements IRenderable{
 		this.eggDelay = 40;
 		this.dead = false;
 		this.bought = false;
+		this.haveDragon = false;
 	}
 	
 	public void update(){
@@ -52,6 +54,7 @@ public class Duck implements IRenderable{
 						this.column = (x-175)/75;
 						GameLogic.playingArea.placed((y-125)/75, column);
 						this.bought = true;
+						GameLogic.playerStatus.setMoney(GameLogic.playerStatus.getMoney()-this.price);
 						this.z = 0;
 						GameLogic.newDuck = true;
 					}else{
@@ -64,7 +67,7 @@ public class Duck implements IRenderable{
 			}
 			
 			
-			if(bought){
+			if(bought&&haveDragon){
 				if(eggDelay == eggDelayCounter){
 					eggDelayCounter = 0;
 					RenderableHolder.getInstance().add(new Egg(this));
@@ -74,6 +77,8 @@ public class Duck implements IRenderable{
 					GameLogic.playingArea.dead((y-125)/75, (x-175)/75);
 					dead = true;
 				}
+				
+				
 			}
 			
 		}
@@ -84,7 +89,7 @@ public class Duck implements IRenderable{
 
 	public void getDuck(){
 
-		if(InputUtility.isMouseLeftDownTrigger()){
+		if(InputUtility.isMouseLeftDownTrigger() && GameLogic.playerStatus.getMoney()>=this.price){
 //			GameLogic.newDuck = false;
 			if(defaultX <= InputUtility.getMouseX() && defaultX+75 >= InputUtility.getMouseX()){
 			
@@ -107,12 +112,15 @@ public class Duck implements IRenderable{
 		DrawingUtility.drawDuck(g, x, y, i);
 		g.drawString(Integer.toString(column), x, y);
 		g.drawString(Integer.toString(hp), x, y+10);
+		
+		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
 		if(bought){
-			if(count==3){
+			if(i == 0) i = 3;
+			if(count==2){
 				i++;
 				count = 0;
 			}else count++;
-			if(i == 2) i = 0;
+			if(i == 9) i = 3;
 		}
 		
 				

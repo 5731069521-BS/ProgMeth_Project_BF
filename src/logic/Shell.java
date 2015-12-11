@@ -45,8 +45,9 @@ public class Shell implements IRenderable {
 		g.setComposite(tran);
 		if(!dead)
 			DrawingUtility.drawShell(g, x, y, i);
+		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
 		if(bought){
-			if(count==7){
+			if(count==0){
 				i++;
 				count = 0;
 			}else count++;

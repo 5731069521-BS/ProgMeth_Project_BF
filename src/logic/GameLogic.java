@@ -40,13 +40,14 @@ public class GameLogic {
 		createShell();
 		releaseDragonDelay = RandomUtility.random(100, 120);
 		starfallDelay = RandomUtility.random(30, 50);
-		
-		
 
 		
 	}
 	
 	public void logicUpdate(){
+//		 if Game is PAUSE or END >> not update logic
+		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
+		
 		RenderableHolder.sort();
 		for(IRenderable a : RenderableHolder.getRenderableList()){
 			
@@ -74,13 +75,14 @@ public class GameLogic {
 //		DRAGON OUT
 		if(releaseDragonDelay == releaseDragonDelayCounter){
 			releaseDragonDelayCounter = 0;
-			releaseDragonDelay = RandomUtility.random(100, 120);
+			releaseDragonDelay = RandomUtility.random(200, 250);
 			int ran = RandomUtility.random(0, 5);
+			int i = RandomUtility.random(0, 4);
 			if(ran == 3){
-				RenderableHolder.getInstance().add(new DragonSuper(175+ran*75));
+				RenderableHolder.getInstance().add(new DragonSuper(175+i*75));
 				
 			}else
-			RenderableHolder.getInstance().add(new Dragon(175+ran*75));
+			RenderableHolder.getInstance().add(new Dragon(175+i*75));
 			
 		}else releaseDragonDelayCounter++;
 		
@@ -91,33 +93,45 @@ public class GameLogic {
 
 				if(RenderableHolder.getRenderableList().get(i) instanceof Dragon){
 					Dragon dragon = (Dragon) RenderableHolder.getRenderableList().get(i);
-					if(RenderableHolder.getRenderableList().get(j) instanceof Egg){
-						Egg egg = (Egg) RenderableHolder.getRenderableList().get(j);
+					if(dragon.isVisible()){
 						
-						if(!egg.destroyed &&egg.column == dragon.column ){
-							if(egg.y-15 <= dragon.y && egg.y+15 >= dragon.y){
-								
-								egg.attackDragon(dragon);
-								break;
+						if(RenderableHolder.getRenderableList().get(j) instanceof Egg){
+							Egg egg = (Egg) RenderableHolder.getRenderableList().get(j);
+							
+							if(!egg.destroyed &&egg.column == dragon.column ){
+								if(egg.y-15 <= dragon.y && egg.y+15 >= dragon.y){
+									
+									egg.attackDragon(dragon);
+									break;
+								}
 							}
 						}
-					}
-					if(RenderableHolder.getRenderableList().get(j) instanceof Duck){
-						Duck duck = (Duck) RenderableHolder.getRenderableList().get(j);
-						
-						if(!duck.dead && duck.column == dragon.column){
-							if(duck.y<=dragon.y && duck.y+50>= dragon.y){
-								dragon.attackDuck(duck);
-								
+						if(RenderableHolder.getRenderableList().get(j) instanceof Duck){
+							Duck duck = (Duck) RenderableHolder.getRenderableList().get(j);
+							
+							if(!duck.dead && duck.column == dragon.column){
+								duck.haveDragon = true;
+								if(duck.y<=dragon.y && duck.y+50>= dragon.y){
+									dragon.attackDuck(duck);
+									
+								}
+								if(dragon.dead){
+									duck.haveDragon = false;
+									System.out.println(" Yes Dead");
+								}
+							}
+							if(dragon.dead){
+								duck.haveDragon = false;
+								System.out.println(" Yes Dead");
 							}
 						}
-					}
-					if(RenderableHolder.getRenderableList().get(j) instanceof Shell){
-						Shell shell = (Shell) RenderableHolder.getRenderableList().get(j);
-						
-						if(!shell.dead && shell.column == dragon.column){
-							if(shell.y<=dragon.y && shell.y+50>=dragon.y){
-								dragon.attackShell(shell);
+						if(RenderableHolder.getRenderableList().get(j) instanceof Shell){
+							Shell shell = (Shell) RenderableHolder.getRenderableList().get(j);
+							
+							if(!shell.dead && shell.column == dragon.column){
+								if(shell.y<=dragon.y && shell.y+50>=dragon.y){
+									dragon.attackShell(shell);
+								}
 							}
 						}
 					}

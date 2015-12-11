@@ -5,7 +5,7 @@ public class InputUtility {
 	private static boolean mouseLeftDown,mouseOnScreen;
 	private static boolean mouseLeftDownUp;
 	private static boolean mouseLeftDownTrigger;
-	private static boolean mouseRightClick;
+	private static boolean mouseRightClickUp;
 	
 	public static boolean isMouseLeftDownTrigger() {
 		return mouseLeftDownTrigger;
@@ -45,5 +45,12 @@ public class InputUtility {
 	public static void setMouseLeftDownUp(boolean mouseLeftDownUp) {
 		InputUtility.mouseLeftDownUp = mouseLeftDownUp;
 	}
+	public static boolean isMouseRightClickUp() {
+		return mouseRightClickUp;
+	}
+	public static void setMouseRightClickUp(boolean mouseRightClickUp) {
+		InputUtility.mouseRightClickUp = mouseRightClickUp;
+	}
+	
 	
 }

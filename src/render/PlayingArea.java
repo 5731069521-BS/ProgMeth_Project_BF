@@ -87,6 +87,12 @@ public class PlayingArea implements IRenderable{
 		// TODO Auto-generated method stub
 		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
 		g.setComposite(tran);
+		g.setColor(Color.black);
+		g.fillRoundRect(45, 125, 85, 75/2-1, 20, 20);
+		g.fillRoundRect(50, 125+75/2+1, 75, 75-2, 20, 20);
+		g.fillRoundRect(50, 200+75/2+1, 75, 75-2, 20, 20);
+		g.fillRoundRect(50, 275+75/2+1, 75, 75-2, 20, 20);
+			
 		g.setColor(Color.white);
 		for(int i = 0; i<7; i++){
 			for(int j = 0; j<5; j++){
