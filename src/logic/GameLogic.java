@@ -19,6 +19,7 @@ public class GameLogic {
 	public static PlayerStatus playerStatus;
 	protected  Duck duck;
 	protected DuckSuper duckSuper;
+	protected DuckAggressive duckAggressive;
 	public static PlayingArea playingArea;
 	protected Shell shell;
 	protected Star star;
@@ -27,6 +28,7 @@ public class GameLogic {
 	public static boolean newDuck;
 	public static boolean newSuperDuck;
 	public static boolean newShell;
+	public static boolean newAggressiveDuck;
 	 
 
 	public GameLogic() {
@@ -37,6 +39,7 @@ public class GameLogic {
 		RenderableHolder.getInstance().add(playerStatus);
 		createDuck();
 		createSuperDuck();
+		createAggressiveDuck();
 		createShell();
 		releaseDragonDelay = RandomUtility.random(100, 120);
 		starfallDelay = RandomUtility.random(30, 50);
@@ -63,6 +66,9 @@ public class GameLogic {
 		}
 		if(newShell){
 			this.createShell();
+		}
+		if(newAggressiveDuck){
+			this.createAggressiveDuck();
 		}
 //		STAR FALL
 		if(starfallDelay == starfallDelayCounter){
@@ -137,7 +143,22 @@ public class GameLogic {
 								}
 							}
 						}
+						if(RenderableHolder.getRenderableList().get(j) instanceof DuckAggressive){
+							DuckAggressive aggressDuck = (DuckAggressive) RenderableHolder.getRenderableList().get(j);
+							
+							if(!aggressDuck.dead && aggressDuck.column == dragon.column){
+								if(aggressDuck.y <= dragon.y && aggressDuck.y+75 >= dragon.y){
+									aggressDuck.setJig(true);
+									System.out.println("jigjig");
+									aggressDuck.attackDragon(dragon);
+								}else{
+									aggressDuck.setJig(false);
+									
+								}
+							}
+						}
 					}
+					
 				}
 			}
 		}
@@ -156,8 +177,13 @@ public class GameLogic {
 		newSuperDuck = false;
 	}
 	public void createShell(){
-		RenderableHolder.getInstance().add(new Shell(50, 275+75/2));
+		RenderableHolder.getInstance().add(new Shell(50, 275+75+75/2));
 		newShell = false;
 	}
+	public void createAggressiveDuck(){
+		RenderableHolder.getInstance().add(new DuckAggressive(50, 275+75/2));
+		newAggressiveDuck = false;
+	}
+	
 	
 }

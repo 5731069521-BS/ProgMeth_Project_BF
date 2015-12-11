@@ -14,11 +14,13 @@ public class Duck implements IRenderable{
 	protected int price = 4;
 
 	protected int defaultX = 50, defaultY = 125+75/2;
-	protected int x,y,z;
+	protected int x;
+	public int y;
+	protected int z;
 	protected int hp;
 	protected int eggDelay , eggDelayCounter;
 	protected boolean canBuy;
-	protected boolean dead;
+	public boolean dead;
 	protected boolean bought;
 	public boolean haveDragon;
 	protected AlphaComposite tran;

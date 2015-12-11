@@ -67,13 +67,13 @@ public class Star implements IRenderable{
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-//		if(!dead){
-//			if(isClick(InputUtility.getMouseX(), InputUtility.getMouseY())){
-//				GameLogic.playerStatus.collectStar();
-//				dead = true;
-//			}
-//			
-//		}
+		if(!dead){
+			if(isClick(InputUtility.getMouseX(), InputUtility.getMouseY())){
+				GameLogic.playerStatus.collectStar();
+				dead = true;
+			}
+			
+		}
 		if(!dead){
 			y += speedY;
 			x += speedX;

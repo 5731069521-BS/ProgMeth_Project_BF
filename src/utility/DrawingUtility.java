@@ -29,6 +29,7 @@ public class DrawingUtility {
 
 	public static BufferedImage duckPic = getImage("res/img/duck-all-new3.png");
 	public static BufferedImage superDuckPic = getImage("res/img/superDuck-all-new3.png");
+	public static BufferedImage aggrasDuckPic = getImage("res/img/aggresDuck-all-jig.png");
 	public static BufferedImage star = getImage("res/img/star-all.png");
 	public static BufferedImage dragon = getImage("res/img/toothless-all-new.png");
 	public static BufferedImage superDragon = getImage("res/img/toothlessSuper-all-new.png");
@@ -76,6 +77,11 @@ public class DrawingUtility {
 	
 	public static void drawSuperDuck(Graphics2D g, int x, int y, int duckCount){
 		BufferedImage duckUse = superDuckPic.getSubimage(duckCount*200, 0, 200, 200);
+		g.drawImage(duckUse, resizeDuck, x, y);
+	}
+	
+	public static void drawAggresDuck(Graphics2D g, int x, int y, int i){
+		BufferedImage duckUse = aggrasDuckPic.getSubimage(i*200, 0, 200, 200);
 		g.drawImage(duckUse, resizeDuck, x, y);
 	}
 	

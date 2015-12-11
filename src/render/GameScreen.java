@@ -3,6 +3,7 @@ package render;
 import input.InputUtility;
 import logic.Dragon;
 import logic.Duck;
+import logic.DuckAggressive;
 import logic.GameLogic;
 import logic.PlayerStatus;
 import logic.RandomUtility;
@@ -147,12 +148,20 @@ public class GameScreen extends JComponent {
 				}
 				else {
 					if(renderable instanceof Dragon){
+						Dragon dragon = (Dragon) renderable;
 						for(int i = 0; i<RenderableHolder.getRenderableList().size(); i++){
 							if(RenderableHolder.getRenderableList().get(i) instanceof Duck){
 								Duck duck = (Duck) RenderableHolder.getRenderableList().get(i);
 								
 								if(duck.column == ((Dragon) renderable).column){
 									duck.haveDragon = false;
+								}
+							}
+							if(RenderableHolder.getRenderableList().get(i) instanceof DuckAggressive){
+								DuckAggressive aggressDuck = (DuckAggressive) RenderableHolder.getRenderableList().get(i);
+								
+								if(!aggressDuck.dead && aggressDuck.column == dragon.column){
+									aggressDuck.setJig(false);
 								}
 							}
 						}

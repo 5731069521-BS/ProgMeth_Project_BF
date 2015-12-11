@@ -9,10 +9,11 @@ import utility.DrawingUtility;
 
 public class Dragon implements IRenderable{
 	protected float hpMax = 50;
-	protected int power = 10;
+	protected int power = 5;
 	protected int speed = 1;
 
-	protected int x,y;
+	protected int x;
+	public int y;
 	protected int hp;
 	protected int i , count;
 	protected boolean dead;
