@@ -1,8 +1,12 @@
 package render;
 
 import input.InputUtility;
+import logic.Dragon;
+import logic.Duck;
 import logic.GameLogic;
+import logic.PlayerStatus;
 import logic.RandomUtility;
+import main.Main;
 import utility.DrawingUtility;
 
 import java.awt.Dimension;
@@ -13,6 +17,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JComponent;
+
+import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
 
 public class GameScreen extends JComponent {
 	public static final int WIDTH = 600;
@@ -53,7 +59,8 @@ public class GameScreen extends JComponent {
 				if(e.getButton() == 1){
 					if(InputUtility.isMouseRightClickUp()){
 						InputUtility.setMouseRightClickUp(false);
-						GameLogic.playerStatus.setPause(!GameLogic.playerStatus.isPause());
+						if(!GameLogic.playerStatus.isPause())
+							GameLogic.playerStatus.setPause(true);
 						InputUtility.setMouseLeftDown(false);
 						InputUtility.setMouseLeftDownTrigger(false);
 						InputUtility.setMouseLeftDownUp(false);
@@ -138,15 +145,42 @@ public class GameScreen extends JComponent {
 				if(renderable.isVisible()){
 					renderable.draw(g2);
 				}
-				else RenderableHolder.getRenderableList().remove(renderable);
+				else {
+					if(renderable instanceof Dragon){
+						for(int i = 0; i<RenderableHolder.getRenderableList().size(); i++){
+							if(RenderableHolder.getRenderableList().get(i) instanceof Duck){
+								Duck duck = (Duck) RenderableHolder.getRenderableList().get(i);
+								
+								if(duck.column == ((Dragon) renderable).column){
+									duck.haveDragon = false;
+								}
+							}
+						}
+					}
+					RenderableHolder.getRenderableList().remove(renderable);
+				}
+				
 			}
 		}
 		if(GameLogic.playerStatus.isEnd){
+			RenderableHolder.clear();
+			if(GameLogic.playerStatus.isPause()) return;
 			if(GameLogic.playerStatus.isWin){
-				
+				DrawingUtility.drawWinScreen(g2);
 			}else DrawingUtility.drawLoseScreen(g2);
 		}else if(GameLogic.playerStatus.isPause() ){
 				DrawingUtility.drawPauseScreen(g2);
+				if(InputUtility.isMouseLeftDownTrigger()){
+					if(InputUtility.getMouseY() >= 300 && InputUtility.getMouseY() <= 400){
+						if(InputUtility.getMouseX() >= 175 && InputUtility.getMouseX() <= 275){
+							Main.titleScene();
+							GameLogic.playerStatus.isEnd = true;
+						}
+						if(InputUtility.getMouseX() >= 300 && InputUtility.getMouseX() <= 400){
+							GameLogic.playerStatus.setPause(false);
+						}
+					}
+				}
 			}
 		
 	}

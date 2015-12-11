@@ -20,7 +20,7 @@ public class Duck implements IRenderable{
 	protected boolean canBuy;
 	protected boolean dead;
 	protected boolean bought;
-	protected boolean haveDragon;
+	public boolean haveDragon;
 	protected AlphaComposite tran;
 	protected int i=0, count = 0;;
 	public int column= -1;

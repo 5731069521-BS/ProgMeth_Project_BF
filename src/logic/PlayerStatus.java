@@ -4,11 +4,12 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 
 import render.IRenderable;
+import render.RenderableHolder;
 import utility.AudioUtility;
 import utility.DrawingUtility;
 
 public class PlayerStatus implements IRenderable{
-	private int time = 10000;
+	private int time = 120*10;
 	private int money;
 
 	private int state;
@@ -47,6 +48,14 @@ public class PlayerStatus implements IRenderable{
 		g.drawString(Integer.toString(money), 85, 155);
 		g.setFont(DrawingUtility.smallFont);
 	}
+	
+	public boolean canReleaseDragon(){
+		if(time >= 20*10){
+			return true;
+		}
+		return false;
+	}
+	
 
 	@Override
 	public boolean isVisible() {
@@ -62,10 +71,23 @@ public class PlayerStatus implements IRenderable{
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		if(time == 0){
+			this.isEnd = true;
+			for(IRenderable a : RenderableHolder.getRenderableList()){
+				if(a instanceof Dragon){
+					this.isWin = false;
+					return;
+				}
+			}
+			this.isWin = true;
+		}
 		
+		time -= 1;
+		System.out.println(time);
 		
 		
 	}
+	
 	public int getTime() {
 		return time;
 	}

@@ -73,18 +73,21 @@ public class GameLogic {
 		}else starfallDelayCounter++;
 		
 //		DRAGON OUT
-		if(releaseDragonDelay == releaseDragonDelayCounter){
-			releaseDragonDelayCounter = 0;
-			releaseDragonDelay = RandomUtility.random(200, 250);
-			int ran = RandomUtility.random(0, 5);
-			int i = RandomUtility.random(0, 4);
-			if(ran == 3){
-				RenderableHolder.getInstance().add(new DragonSuper(175+i*75));
+		if(GameLogic.playerStatus.canReleaseDragon()){
+			if(releaseDragonDelay == releaseDragonDelayCounter){
+				releaseDragonDelayCounter = 0;
+				releaseDragonDelay = RandomUtility.random(200, 250);
+				int ran = RandomUtility.random(0, 5);
+				int i = RandomUtility.random(0, 4);
+				if(ran == 3){
+					RenderableHolder.getInstance().add(new DragonSuper(175+i*75));
+					
+				}else
+					RenderableHolder.getInstance().add(new Dragon(175+i*75));
 				
-			}else
-			RenderableHolder.getInstance().add(new Dragon(175+i*75));
+			}else releaseDragonDelayCounter++;
 			
-		}else releaseDragonDelayCounter++;
+		}
 		
 //		SU KAN
 		for(int i = 0; i<RenderableHolder.getRenderableList().size(); i++){

@@ -48,5 +48,11 @@ public class RenderableHolder {
 		return entities;
 	}
 	
+	public static void clear(){
+		for(IRenderable a : entities){
+			entities.remove(a);
+		}
+	}
+	
 
 }

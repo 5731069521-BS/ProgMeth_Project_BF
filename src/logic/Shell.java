@@ -47,11 +47,11 @@ public class Shell implements IRenderable {
 			DrawingUtility.drawShell(g, x, y, i);
 		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
 		if(bought){
-			if(count==0){
+			if(count==2){
 				i++;
 				count = 0;
 			}else count++;
-			if(i == 6) i = 0;
+			if(i == 7) i = 1;
 		}
 		
 	}

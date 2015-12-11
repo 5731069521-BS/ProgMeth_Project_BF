@@ -27,14 +27,14 @@ public class DrawingUtility {
 		}
 	}
 
-	public static BufferedImage duckPic = getImage("res/img/duck-all-new1.png");
-	public static BufferedImage superDuckPic = getImage("res/img/superDuck-all-new1.png");
+	public static BufferedImage duckPic = getImage("res/img/duck-all-new3.png");
+	public static BufferedImage superDuckPic = getImage("res/img/superDuck-all-new3.png");
 	public static BufferedImage star = getImage("res/img/star-all.png");
 	public static BufferedImage dragon = getImage("res/img/toothless-all-new.png");
 	public static BufferedImage superDragon = getImage("res/img/toothlessSuper-all-new.png");
 	public static BufferedImage egg = getImage("res/img/egg.png");
 	public static BufferedImage superEgg = getImage("res/img/superEgg.png");
-	public static BufferedImage shell = getImage("res/img/shell-all.png");
+	public static BufferedImage shell = getImage("res/img/shell-all-new.png");
 	public static BufferedImage[] bg = new BufferedImage[7];
 	
 	public static void createBg(){
@@ -115,8 +115,11 @@ public class DrawingUtility {
 		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
 		g.setComposite(tran);
 		
-		g.setColor(Color.DARK_GRAY);
+		g.setColor(Color.white);
 		g.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
+		g.setColor(Color.darkGray);
+		g.fillRoundRect(175, 300, 100, 100, 30, 30);
+		g.fillRoundRect(300, 300, 100, 100, 30, 30);
 		
 	}
 	
@@ -130,6 +133,20 @@ public class DrawingUtility {
 		g.setFont(standardFont);
 		Rectangle2D rec = g.getFontMetrics().getStringBounds("YOU LOSE!", g);
 		g.drawString("YOU LOSE!", (int) (GameScreen.WIDTH/2 - rec.getWidth()/2),(int) (GameScreen.HEIGHT/2 - rec.getHeight()/2));
+	
+	}
+	
+	public static void drawWinScreen(Graphics2D g){
+		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f);
+		g.setComposite(tran);
+		
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
+		g.setColor(Color.white);
+		g.setFont(standardFont);
+		Rectangle2D rec = g.getFontMetrics().getStringBounds("YOU WIN!", g);
+		g.drawString("YOU WIN!", (int) (GameScreen.WIDTH/2 - rec.getWidth()/2),(int) (GameScreen.HEIGHT/2 - rec.getHeight()/2));
+	
 	}
 	
 }
