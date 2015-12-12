@@ -23,10 +23,10 @@ public class GameTitle extends JPanel{
 	public GameTitle() {
 		// TODO Auto-generated constructor stub
 		this.setPreferredSize(new Dimension(GameScreen.WIDTH, GameScreen.HEIGHT));
-		JButton start = new JButton("START!");
+		JButton start = new JButton("PLAY GAME!");
 		this.setBackground(Color.black);
-		this.add(start, BorderLayout.SOUTH);
-		
+		this.add(start, BorderLayout.WEST);
+				
 		start.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -36,18 +36,19 @@ public class GameTitle extends JPanel{
 				Main.runGame();
 			}
 		});
+		
 		this.setVisible(true);
 	}
 	
-//	@Override
-//	protected void paintComponent(Graphics g) {
-//		// TODO Auto-generated method stub
-//		super.paintComponent(g);
-//		Graphics2D g2 = (Graphics2D) g;
-//		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
-//		g2.setComposite(tran);
-//		g2.setColor(Color.black);
-//		g2.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
-//	
-//	}
+	@Override
+	protected void paintComponent(Graphics g) {
+		// TODO Auto-generated method stub
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		g2.setComposite(tran);
+		g2.setColor(Color.black);
+		g2.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
+	
+	}
 }

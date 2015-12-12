@@ -39,10 +39,10 @@ public class GameLogic {
 
 	public GameLogic() {
 		// TODO Auto-generated constructor stub
-		playerStatus = new PlayerStatus();
+		
 		playingArea = new PlayingArea();
 		RenderableHolder.getInstance().add(playingArea);
-		RenderableHolder.getInstance().add(playerStatus);
+
 		createDuck();
 		createSuperDuck();
 		createAggressiveDuck();

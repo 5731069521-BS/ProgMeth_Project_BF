@@ -20,11 +20,18 @@ public class PlayerStatus implements IRenderable{
 	public boolean isEnd;
 	public boolean isWin;
 	
+//	public PlayerStatus(String name, int state, int money) {
+//		// TODO Auto-generated constructor stub
+//		this.name = name;
+//		this.money = money;
+//		this.state = state;
+//		this.time = this.timeMax;
+//	}
 	public PlayerStatus() {
 		// TODO Auto-generated constructor stub
-		this.money = 100;
-		this.state = 4;
 		this.time = this.timeMax;
+		this.money = 100;
+		this.state = 10;
 	}
 	
 	public boolean isPause(){
