@@ -33,7 +33,8 @@ public class PlayerStatus implements IRenderable{
 
 	public void collectStar() {
 		this.money += 1;
-		AudioUtility.starSound.play();
+		if(!DrawingUtility.isMute)
+			AudioUtility.starSound.play();
 	}
 
 	public void buy(int price) {

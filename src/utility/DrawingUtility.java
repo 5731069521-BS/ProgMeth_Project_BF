@@ -49,6 +49,7 @@ public class DrawingUtility {
 	public static BufferedImage next = getImage("res/img/next-but.png");
 	public static BufferedImage play = getImage("res/img/play-but.png");
 	public static BufferedImage sound = getImage("res/img/sound-but-all.png");
+	public static BufferedImage replay = getImage("res/img/replay-but.png");
 	public static BufferedImage winLine = getImage("res/img/winLine.png");
 	public static BufferedImage[] bg = new BufferedImage[7];
 	
@@ -177,6 +178,7 @@ public class DrawingUtility {
 		else g.drawImage(sound.getSubimage(0, 0, 200, 200), resizeHalf, 125+375/2, 475/2+125);
 		
 		g.drawImage(home, resizeHalf, 375/2, 475/2+125);
+		g.drawImage(replay, resizeHalf, 375/2, 475/2);
 		
 	}
 	
@@ -186,11 +188,17 @@ public class DrawingUtility {
 		
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
+		AlphaComposite noTran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		g.setComposite(noTran);
+		
 		g.setColor(Color.white);
 		g.setFont(standardFont);
 		Rectangle2D rec = g.getFontMetrics().getStringBounds("YOU LOSE!", g);
-		g.drawString("YOU LOSE!", (int) (GameScreen.WIDTH/2 - rec.getWidth()/2),(int) (GameScreen.HEIGHT/2 - rec.getHeight()/2));
+		g.drawString("YOU LOSE!", (int) (GameScreen.WIDTH/2 - rec.getWidth()/2),475/2 + 25);
+		g.setFont(smallFont);
 	
+		g.drawImage(home, resizeHalf, 375/2, 475/2+50);
+		g.drawImage(replay, resizeHalf, 375/2 + 125, 475/2 + 50);
 	}
 	
 	public static void drawWinScreen(Graphics2D g){
@@ -200,9 +208,18 @@ public class DrawingUtility {
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, GameScreen.WIDTH, GameScreen.HEIGHT);
 		g.setColor(Color.white);
+		
+		AlphaComposite noTran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		g.setComposite(noTran);
+		
 		g.setFont(standardFont);
 		Rectangle2D rec = g.getFontMetrics().getStringBounds("YOU WIN!", g);
-		g.drawString("YOU WIN!", (int) (GameScreen.WIDTH/2 - rec.getWidth()/2),(int) (GameScreen.HEIGHT/2 - rec.getHeight()/2));
+		g.drawString("YOU WIN!", (int) (GameScreen.WIDTH/2 - rec.getWidth()/2),475/2 + 25);
+		g.setFont(smallFont);
+		
+		g.drawImage(home, resizeHalf, 375/2, 475/2+50);
+		g.drawImage(next, resizeHalf, 375/2 + 125, 475/2 + 50);
+		
 	
 	}
 	
@@ -220,4 +237,7 @@ public class DrawingUtility {
 		sub = winLine.getSubimage(0, 0, r, winLine.getHeight()*2/3);
 		g.drawImage(sub, resizeHalf, 175, 125-45/2);
 	}
+	
+	
+	
 }
