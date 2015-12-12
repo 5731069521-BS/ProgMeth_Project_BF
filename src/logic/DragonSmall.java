@@ -5,41 +5,41 @@ import java.awt.Graphics2D;
 
 import utility.DrawingUtility;
 
-public class DragonSuper extends Dragon{
+public class DragonSmall extends Dragon {
 
-	
-	public DragonSuper(int x) {
-		// TODO Auto-generated constructor stub
+	public DragonSmall(int x) {
 		super(x);
-		this.hpMax = 100;
+		// TODO Auto-generated constructor stub
+		this.speed = 3;
+		this.hpMax = 20;
 		this.hp = (int) this.hpMax;
-		this.speed = 1;
+		this.i = RandomUtility.random(0, 7);
+				
 	}
-	
+
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
 		tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) hp/hpMax);
 		g.setComposite(tran);
-		
+
 		g.drawString(Integer.toString(column), x, y);
 		g.drawString(Integer.toString(hp), x, y+10);
-
-		DrawingUtility.drawSuperDragon(g, x, y, i);
+		
+		DrawingUtility.drawSmallDragon(g, x, y, i);
 		if(isFrozen){
-			tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) ((float)hp/hpMax + 0.1));
+			tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) ((float) hp/hpMax + 0.1));
 			g.setComposite(tran);
 			
-			DrawingUtility.drawCoverDragon(g, x, y, i);
+			DrawingUtility.drawCoverSmallDragon(g, x, y, i);
 			if(frozenCount == frozenTime){
 				frozenCount = 0;
 				isFrozen = false;
 			}else frozenCount++;
 		}
 		
-		
 		if(GameLogic.playerStatus.isPause() || GameLogic.playerStatus.isEnd) return;
-		if(count==0){
+		if(count==1){
 			i++;
 			count = 0;
 		}else count++;
@@ -57,5 +57,5 @@ public class DragonSuper extends Dragon{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 }

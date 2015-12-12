@@ -93,7 +93,8 @@ public class PlayingArea implements IRenderable{
 		g.fillRoundRect(50, 200+75/2+1, 75, 75-2, 20, 20);
 		g.fillRoundRect(50, 275+75/2+1, 75, 75-2, 20, 20);
 		g.fillRoundRect(50, 275+75*3/2+1, 75, 75-2, 20, 20);
-			
+		g.fillRoundRect(50, 275+75*5/2+1, 75, 75-2, 20, 20);
+		
 		g.setColor(Color.white);
 		for(int i = 0; i<7; i++){
 			for(int j = 0; j<5; j++){

@@ -9,7 +9,9 @@ import utility.AudioUtility;
 import utility.DrawingUtility;
 
 public class PlayerStatus implements IRenderable{
-	private int time = 120*10;
+	public static int timeMax = 300*10;
+	private int time;
+	private int stopTime = 50*10;
 	private int money;
 
 	private int state;
@@ -21,7 +23,8 @@ public class PlayerStatus implements IRenderable{
 	public PlayerStatus() {
 		// TODO Auto-generated constructor stub
 		this.money = 100;
-		this.state = 1;
+		this.state = 4;
+		this.time = this.timeMax;
 	}
 	
 	public boolean isPause(){
@@ -40,6 +43,7 @@ public class PlayerStatus implements IRenderable{
 	@Override
 	public void draw(Graphics2D g) {
 		// TODO Auto-generated method stub
+		DrawingUtility.drawWinLine(g, this.time);
 		AlphaComposite tran = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
 		g.setComposite(tran);
 		
@@ -50,7 +54,7 @@ public class PlayerStatus implements IRenderable{
 	}
 	
 	public boolean canReleaseDragon(){
-		if(time >= 20*10){
+		if(time >= stopTime){
 			return true;
 		}
 		return false;

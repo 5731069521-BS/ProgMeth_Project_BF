@@ -21,6 +21,7 @@ public class DuckAggressive extends Duck{
 		this.isJig = true;
 		this.defaultX = 50;
 		this.defaultY = 275 + 75/2;
+		this.price = 6;
 	}
 	
 	public void update(){

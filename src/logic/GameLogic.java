@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import input.InputUtility;
+import javafx.print.PageLayout;
 import render.GameScreen;
 import render.IRenderable;
 import render.PlayingArea;
@@ -29,7 +30,12 @@ public class GameLogic {
 	public static boolean newSuperDuck;
 	public static boolean newShell;
 	public static boolean newAggressiveDuck;
-	 
+	public static boolean newFrozenDuck;
+	public static int[][] dragonInState;
+	private final int STATE_MAX = 10;
+	private int smallDragonTime = 2  , smallDragonCount;
+	private boolean releaseSmallDragon;
+	
 
 	public GameLogic() {
 		// TODO Auto-generated constructor stub
@@ -40,7 +46,32 @@ public class GameLogic {
 		createDuck();
 		createSuperDuck();
 		createAggressiveDuck();
+		createFrozenDuck();
 		createShell();
+		
+		dragonInState = new int[STATE_MAX][10];
+//		gen DRAGON = 0;
+//		gen SUPER DRAGON = 1
+		for(int i = 1; i<7; i++){
+			for(int j = 9; i + j >= 10; j--){
+				dragonInState[i][j] = 1;
+			}
+		}
+		for(int i=7; i<STATE_MAX; i++){
+			for(int j = 1; j<10; j++){
+				dragonInState[i][j] = 1;
+			}
+		}
+//		gen SMALL DRAGON = 2
+		for(int i = 3; i<STATE_MAX; i++){
+			dragonInState[i][9] = 2;
+		}
+		for(int i = 7; i<STATE_MAX; i++){
+			dragonInState[i][8] = 2;
+		}
+		dragonInState[9][7] = 3;
+		
+		
 		releaseDragonDelay = RandomUtility.random(100, 120);
 		starfallDelay = RandomUtility.random(30, 50);
 
@@ -70,6 +101,10 @@ public class GameLogic {
 		if(newAggressiveDuck){
 			this.createAggressiveDuck();
 		}
+		if(newFrozenDuck){
+			this.createFrozenDuck();
+		}
+		
 //		STAR FALL
 		if(starfallDelay == starfallDelayCounter){
 			starfallDelayCounter = 0;
@@ -83,19 +118,56 @@ public class GameLogic {
 			if(releaseDragonDelay == releaseDragonDelayCounter){
 				releaseDragonDelayCounter = 0;
 				releaseDragonDelay = RandomUtility.random(200, 250);
-				int ran = RandomUtility.random(0, 5);
-				int i = RandomUtility.random(0, 4);
-				if(ran == 3){
-					RenderableHolder.getInstance().add(new DragonSuper(175+i*75));
+				int ran = RandomUtility.random(0, 9);
+				System.out.println(ran);
+//				int ran = 9;
+				int i = RandomUtility.random(1, 5);
+//				int i = 1;
+				if(dragonInState[playerStatus.getState()-1][ran] == 0){
+					RenderableHolder.getInstance().add(new Dragon(175+i*75));					
+				}else if(dragonInState[playerStatus.getState()-1][ran] == 1){
+					RenderableHolder.getInstance().add(new DragonSuper(175+i*75));					
+				}else if(dragonInState[playerStatus.getState()-1][ran] == 2){
+					releaseSmallDragon = true;
+					RenderableHolder.getInstance().add(new DragonSmall(175+1*75));
+					RenderableHolder.getInstance().add(new DragonSmall(175+2*75));
+					RenderableHolder.getInstance().add(new DragonSmall(175+3*75));
+					RenderableHolder.getInstance().add(new DragonSmall(175+4*75));
+					RenderableHolder.getInstance().add(new DragonSmall(175+5*75));
 					
-				}else
-					RenderableHolder.getInstance().add(new Dragon(175+i*75));
+				}
 				
-			}else releaseDragonDelayCounter++;
+			
+			}
+			releaseDragonDelayCounter++;
+			
+			if(releaseSmallDragon){
+				if(releaseDragonDelayCounter%50 == 0){
+					RenderableHolder.getInstance().add(new DragonSmall(175+1*75));
+					RenderableHolder.getInstance().add(new DragonSmall(175+2*75));
+					RenderableHolder.getInstance().add(new DragonSmall(175+3*75));
+					RenderableHolder.getInstance().add(new DragonSmall(175+4*75));
+					RenderableHolder.getInstance().add(new DragonSmall(175+5*75));
+					if(smallDragonCount == smallDragonTime){
+						smallDragonCount = 0;
+						releaseSmallDragon = false;
+					}else{
+						smallDragonCount++;
+						System.out.println("           " +smallDragonCount);
+					}
+				}
+				
+			}
 			
 		}
 		
 //		SU KAN
+		fighting();
+		
+		
+	}
+	
+	public void fighting(){
 		for(int i = 0; i<RenderableHolder.getRenderableList().size(); i++){
 
 			for(int j = 0; j<RenderableHolder.getRenderableList().size(); j++){
@@ -109,6 +181,9 @@ public class GameLogic {
 							
 							if(!egg.destroyed &&egg.column == dragon.column ){
 								if(egg.y-15 <= dragon.y && egg.y+15 >= dragon.y){
+									if(egg instanceof EggFrozen){
+										dragon.isFrozen = true;
+									}
 									
 									egg.attackDragon(dragon);
 									break;
@@ -162,8 +237,6 @@ public class GameLogic {
 				}
 			}
 		}
-		
-		
 	}
 	
 	public void createDuck(){
@@ -177,12 +250,16 @@ public class GameLogic {
 		newSuperDuck = false;
 	}
 	public void createShell(){
-		RenderableHolder.getInstance().add(new Shell(50, 275+75+75/2));
+		RenderableHolder.getInstance().add(new Shell(50, 275+150+75/2));
 		newShell = false;
 	}
 	public void createAggressiveDuck(){
 		RenderableHolder.getInstance().add(new DuckAggressive(50, 275+75/2));
 		newAggressiveDuck = false;
+	}
+	public void createFrozenDuck(){
+		RenderableHolder.getInstance().add(new DuckFrozen(50, 275+75+75/2));
+		newFrozenDuck = false;
 	}
 	
 	

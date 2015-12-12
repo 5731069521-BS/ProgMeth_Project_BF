@@ -177,17 +177,26 @@ public class GameScreen extends JComponent {
 			if(GameLogic.playerStatus.isWin){
 				DrawingUtility.drawWinScreen(g2);
 			}else DrawingUtility.drawLoseScreen(g2);
+			
 		}else if(GameLogic.playerStatus.isPause() ){
 				DrawingUtility.drawPauseScreen(g2);
 				if(InputUtility.isMouseLeftDownTrigger()){
-					if(InputUtility.getMouseY() >= 300 && InputUtility.getMouseY() <= 400){
-						if(InputUtility.getMouseX() >= 175 && InputUtility.getMouseX() <= 275){
+					if(InputUtility.getMouseY() >= 475/2+125 && InputUtility.getMouseY() <= 475/2+225){
+						if(InputUtility.getMouseX() >= 375/2 && InputUtility.getMouseX() <= 375/2+100){
 							Main.titleScene();
 							GameLogic.playerStatus.isEnd = true;
 						}
-						if(InputUtility.getMouseX() >= 300 && InputUtility.getMouseX() <= 400){
+//						sound
+						if(InputUtility.getMouseX() >= 125+375/2 && InputUtility.getMouseX() <= 225+375/2){
+							DrawingUtility.isMute = !DrawingUtility.isMute;
+						}
+						
+					}
+					if(InputUtility.getMouseY() >= 475/2 && InputUtility.getMouseY() <= 475/2+100){
+						if(InputUtility.getMouseX() >= 125+375/2 && InputUtility.getMouseX() <= 225+375/2){
 							GameLogic.playerStatus.setPause(false);
 						}
+//						new state again
 					}
 				}
 			}

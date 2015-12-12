@@ -13,7 +13,7 @@ public class Shell implements IRenderable {
 	private int price = 2;
 
 	public int x,y,z;
-	private int defaultX = 50, defaultY = 275+75+75/2;
+	private int defaultX = 50, defaultY = 275+150+75/2;
 	private int hp;
 	private boolean canBuy;
 	public boolean dead;
